@@ -12,4 +12,3 @@ Once the dependencies were installed you can run the project with:
 ```bash
 pnpm run dev
 ```
-

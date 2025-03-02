@@ -80,8 +80,8 @@ export function HomeScreen({
         </div>
         
         {/* History header with tabs */}
-        <div className="w-full bg-dark-200 pb-2 px-9 border-b border-dark-300">
-          <div className="max-w-md mx-auto">
+        <div className="w-full bg-dark-200 pb-2">
+          <div className="max-w-md mx-auto px-4">
             <div className="bg-dark-100 rounded-xl shadow-lg p-4">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-white flex items-center">
