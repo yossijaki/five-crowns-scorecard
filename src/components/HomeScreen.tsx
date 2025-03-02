@@ -79,7 +79,7 @@ export function HomeScreen({
 
       <div className={`pt-${isHeaderCompact ? '24' : '36'} pb-4 transition-all duration-300 ease-in-out`}>
         <div className="max-w-md mx-auto px-4">
-          <div className="bg-dark-100 rounded-xl shadow-lg p-4 mt-4">
+          <div className="bg-dark-100 rounded-xl shadow-lg p-4 mt-48">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-white flex items-center">
                 <span className="mr-2">📜</span> Historial
