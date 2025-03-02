@@ -10,6 +10,26 @@
   color: #F3F4F6;
 }
 
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  /* Prevent overscroll */
+  overscroll-behavior: none;
+}
+
+body {
+  min-height: 100vh;
+  /* Use flex to ensure content fills the screen */
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -105,12 +125,6 @@ textarea:focus-visible {
 /* Improve tap feedback on mobile */
 button:active {
   @apply transform scale-95 transition-transform duration-75;
-}
-
-/* Fix for scrolling issues */
-html, body {
-  height: 100%;
-  overflow-x: hidden;
 }
 
 /* Sticky header animation */

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { GameHistory } from '../types';
 import { formatDate } from '../utils';
 
 interface GameHistoryProps {
