@@ -164,7 +164,7 @@ export function PlayerSetup({ onStartGame, onGoHome }: PlayerSetupProps) {
                     onChange={(e) => handleNameChange(index, e.target.value)}
                     onFocus={() => handleInputFocus(index)}
                     placeholder={`Jugador ${index + 1}`}
-                    className="flex-1 p-2 pl-8 bg-dark-300 text-white border border-dark-100 rounded-lg 
+                    className="flex-1 p-2 pl-14 bg-dark-300 text-white border border-dark-100 rounded-lg 
                              focus:ring-2 focus:ring-primary focus:border-primary"
                     maxLength={30}
                     ref={(el) => { inputRefs.current[index] = el }}
