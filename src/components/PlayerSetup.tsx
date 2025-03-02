@@ -173,7 +173,7 @@ export function PlayerSetup({ onStartGame, onGoHome }: PlayerSetupProps) {
                   {showColorPicker === index && (
                     <div 
                       ref={colorPickerRef}
-                      className="absolute z-20 left-0 top-10 bg-dark-300 rounded-lg p-3 shadow-lg grid grid-cols-5 gap-2 w-36 border border-dark-100 animate-fadeIn"
+                      className="absolute z-20 left-0 top-10 bg-dark-300 rounded-lg p-3 shadow-lg grid grid-cols-5 gap-1 border border-dark-100 animate-fadeIn"
                     >
                       <div className="col-span-5 mb-1 text-xs text-gray-400 text-center">
                         Selecciona un color
