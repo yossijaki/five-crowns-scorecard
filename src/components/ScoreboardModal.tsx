@@ -87,7 +87,7 @@ export function ScoreboardModal({
                   >
                     <div className="flex flex-col items-center">
                       <div>R{round}</div>
-                      <div className="text-xs">({getCardsForRound(round)}🃏)</div>
+                      <div className="text-xs min-w-12">({getCardsForRound(round)}🃏)</div>
                       {round < currentRound && (
                         <button 
                           onClick={() => onEditRound(round)}

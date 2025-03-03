@@ -224,7 +224,7 @@ export function PlayerSetup({ onStartGame, onGoHome }: PlayerSetupProps) {
                 type="button"
                 onClick={addPlayer}
                 className="w-full py-2 px-4 bg-dark-300 text-white rounded-lg 
-                         hover:bg-dark-100 transition-colors flex items-center justify-center"
+                         hover:bg-zinc-700 transition-colors flex items-center justify-center"
               >
                 <span className="mr-2">+</span> Añadir jugador
               </button>
