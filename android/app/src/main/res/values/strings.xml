@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Five Crowns Companion: Party Score</string>
+    <string name="title_activity_main">Five Crowns Companion: Party Score</string>
+    <string name="package_name">yossijaki.github.io.fivecrowns</string>
+    <string name="custom_url_scheme">yossijaki.github.io.fivecrowns</string>
+</resources>
