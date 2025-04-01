@@ -70,7 +70,7 @@ export function HomeScreen({
                 onClick={onStartNewGame}
                 className={`py-2 px-4 bg-primary text-white rounded-lg 
                          hover:bg-primary/90 transition-all duration-300 ease-in-out flex items-center justify-center
-                         ${isHeaderCompact ? 'text-sm ml-2 flex-shrink-0' : 'w-full py-3 text-lg font-semibold'}`}
+                         ${isHeaderCompact ? 'text-sm ml-2 shrink-0' : 'w-full py-3 text-lg font-semibold'}`}
               >
                 <span className="mr-2">🃏</span> 
                 {isHeaderCompact ? 'Nueva' : 'Nueva Partida'}
