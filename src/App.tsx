@@ -113,7 +113,7 @@ function App() {
   }
 
   const handleNewGame = () => {
-    if (window.confirm('¿Estás seguro de que quieres iniciar un nuevo juego? Se perderán los datos actuales.')) {
+    if (window.confirm('¿Quieres iniciar un nuevo juego? La partida actual se guardará en el historial.')) {
       // Save current game to history if it's not already there
       if (currentGame.players.length > 0) {
         const gameInHistory = gameHistory.some(g => 
@@ -327,7 +327,7 @@ function App() {
   const handleGoHome = () => {
     // If there's an active game, confirm before going home
     if (currentGame.players.length > 0 && !currentGame.isGameComplete) {
-      if (window.confirm('¿Estás seguro de que quieres volver al inicio? El progreso actual se guardará en el historial.')) {
+      if (window.confirm('¿Quieres volver al inicio? La partida actual se guardará en el historial.')) {
         // Save current game to history if it's not already there
         const gameInHistory = gameHistory.some(g => 
           g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
