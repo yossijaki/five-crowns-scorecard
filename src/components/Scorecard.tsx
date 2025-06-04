@@ -120,7 +120,7 @@ export function Scorecard({
 
   return (
     <div className="min-h-screen bg-dark-200 flex flex-col">
-      <div className="max-w-sm mx-auto w-full flex flex-col px-4">
+      <div className="max-w-sm mx-auto w-full flex flex-col px-4 mt-4">
         <div className="bg-dark-100 rounded-xl shadow-lg p-4 mb-4 mt-4">
           {/* Header with scoreboard button */}
           <div className="flex justify-between items-center mb-4">

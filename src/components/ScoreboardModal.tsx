@@ -15,7 +15,7 @@ export function ScoreboardModal({
   currentRound, 
   onClose, 
   onEditRound,
-  getCardsForRound
+  getCardsForRound  
 }: ScoreboardModalProps) {
   const modalRef = useRef<HTMLDivElement>(null)
   const rounds = Array.from({ length: 11 }, (_, i) => i + 1)
@@ -87,8 +87,8 @@ export function ScoreboardModal({
                   >
                     <div className="flex flex-col items-center">
                       <div>R{round}</div>
-                      <div className="text-xs min-w-12">({getCardsForRound(round)}🃏)</div>
-                      {round < currentRound && (
+                      <div className="text-xs min-w-12">({getCardsForRound(round)})</div>
+                      {round < currentRound ? (
                         <button 
                           onClick={() => onEditRound(round)}
                           className="text-xs mt-1 text-primary hover:underline flex items-center justify-center"
@@ -97,6 +97,8 @@ export function ScoreboardModal({
                         >
                           <span className="bg-primary/10 p-1 rounded-full">✏️</span>
                         </button>
+                      ) : (
+                        <span className="bg-secondary/10 p-1 mt-1 rounded-full">⛔</span>
                       )}
                     </div>
                   </th>
