@@ -32,6 +32,11 @@ To run the project, whether, running the web version first, or running android v
   
 ### Running in Android virtual device
 Once the project is built, you will need to execute this command to sync your changes in the react project to the Android app version:
+first build the static files:
+```bash
+pnpm run build
+```
+then sync the static files to the android project:
 ```bash
 npx cap sync android
 ```
@@ -59,6 +64,8 @@ If you see somethin like this, your device is ready.
 #### Running the app
 Now you can build your app, sync your changes and then install the app in your mobile device using:
 ```bash
+pnpm run build  
+npx cap sync android  
 cd android  
 ./gradlew installDebug
 ```

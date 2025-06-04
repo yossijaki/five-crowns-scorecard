@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { PlayerSetup } from './components/PlayerSetup'
 import { Scorecard } from './components/Scorecard'
 import { HomeScreen } from './components/HomeScreen'
@@ -7,6 +7,8 @@ import { GameResults } from './components/GameResults'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import type { AppState, GameState, Player, GameHistory } from './types'
 import { generateGameId, getCurrentDate } from './utils'
+import { App as CapacitorApp } from '@capacitor/app'
+import type { PluginListenerHandle } from '@capacitor/core'
 
 const initialGameState: GameState = {
   players: [],
@@ -374,6 +376,24 @@ function App() {
     g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
     g.date > getCurrentDate().substring(0, 10)
   );
+
+  useEffect(() => {
+    const addListener = async () => {
+      const handler = await CapacitorApp.addListener('backButton', () => {
+        if (!currentGame.isGameStarted) {
+          CapacitorApp.exitApp();
+        }
+      });
+      return handler;
+    };
+    let listener: PluginListenerHandle | undefined;
+    addListener().then(h => { listener = h });
+    return () => {
+      if (listener && typeof listener.remove === 'function') {
+        listener.remove();
+      }
+    };
+  }, [currentGame.isGameStarted]);
 
   if (!currentGame.isGameStarted) {
     return (
