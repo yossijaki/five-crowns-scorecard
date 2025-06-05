@@ -378,22 +378,45 @@ function App() {
   );
 
   useEffect(() => {
+    let listener: PluginListenerHandle | undefined;
     const addListener = async () => {
-      const handler = await CapacitorApp.addListener('backButton', () => {
+      listener = await CapacitorApp.addListener('backButton', () => {
+        // Pantalla PlayerSetup: volver a HomeScreen
+        if (currentGame.isGameStarted && currentGame.players.length === 0) {
+          setAppState({
+            ...appState,
+            currentGame: initialGameState
+          });
+          setShowResults(false);
+          return;
+        }
+        // Pantalla GameResults: volver a HomeScreen
+        if (showResults && currentGame.isGameComplete) {
+          setAppState({
+            ...appState,
+            currentGame: initialGameState
+          });
+          setShowResults(false);
+          return;
+        }
+        // Pantalla Scorecard: ejecutar handleGoHome
+        if (currentGame.isGameStarted && currentGame.players.length > 0 && !currentGame.isGameComplete) {
+          handleGoHome();
+          return;
+        }
+        // Si está en HomeScreen, salir de la app
         if (!currentGame.isGameStarted) {
           CapacitorApp.exitApp();
         }
       });
-      return handler;
     };
-    let listener: PluginListenerHandle | undefined;
-    addListener().then(h => { listener = h });
+    addListener();
     return () => {
       if (listener && typeof listener.remove === 'function') {
         listener.remove();
       }
     };
-  }, [currentGame.isGameStarted]);
+  }, [currentGame, showResults, appState]);
 
   if (!currentGame.isGameStarted) {
     return (
