@@ -130,8 +130,7 @@ export function PlayerSetup({ onStartGame, onGoHome }: PlayerSetupProps) {
   return (
     <div className="min-h-screen bg-dark-200 p-4">
       <div className="max-w-md mx-auto bg-dark-100 rounded-xl shadow-lg p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-white">Configurar Jugadores</h1>
+        <div className="flex space-x-2 items-center mb-6">
           <button
             onClick={onGoHome}
             className="p-2 bg-dark-300 text-white rounded-lg hover:bg-dark-200 flex items-center"
@@ -139,6 +138,7 @@ export function PlayerSetup({ onStartGame, onGoHome }: PlayerSetupProps) {
           >
             <span className="text-lg">🏠</span>
           </button>
+          <h1 className="text-2xl font-bold text-white">Configurar Jugadores</h1>
         </div>
         
         <form onSubmit={handleSubmit}>

@@ -457,6 +457,14 @@ function App() {
     <div>
       <div className="fixed top-0 left-0 right-0 bg-dark-200 border-b border-dark-300 p-4 z-10">
         <div className="max-w-md mx-auto flex justify-between items-center">
+        <button
+              onClick={handleGoHome}
+              className="px-4 py-2 bg-dark-100 text-white rounded-lg 
+                       hover:bg-dark-200 transition-colors flex items-center"
+              aria-label="Volver al inicio"
+            >
+              <span className="mr-1">🏠</span> Inicio
+            </button>
           <h1 className="text-lg font-semibold text-white flex flex-col items-center">
             <span className="flex items-center">
               <span className="mr-2">🃏</span> Ronda {currentGame.currentRound}
@@ -466,21 +474,14 @@ function App() {
             </span>
           </h1>
           <div className="flex space-x-2">
-            <button
-              onClick={handleGoHome}
-              className="px-4 py-2 bg-dark-100 text-white rounded-lg 
-                       hover:bg-dark-200 transition-colors flex items-center"
-              aria-label="Volver al inicio"
-            >
-              <span className="mr-1">🏠</span> Inicio
-            </button>
+            
             <button
               onClick={handleNewGame}
               className="px-4 py-2 bg-dark-100 text-white rounded-lg 
                        hover:bg-dark-200 transition-colors flex items-center"
               aria-label="Iniciar nuevo juego"
             >
-              <span className="mr-1">🔄</span> Nuevo Juego
+              <span className="mr-1">🔄</span> Nuevo
             </button>
           </div>
         </div>

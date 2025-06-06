@@ -56,7 +56,7 @@ export function GameHistoryList({
           <div className="flex justify-between items-start mb-2">
             <div>
               <h3 className="font-semibold text-white text-lg flex items-center">
-                {game.title || formatDate(game.date, true)}
+                {game.note || formatDate(game.date, true)}
                 {game.isComplete && <span className="ml-2 text-green-500 text-sm">✓</span>}
               </h3>
               <p className="text-xs text-gray-400">{formatDate(game.date)}</p>
@@ -115,7 +115,7 @@ export function GameHistoryList({
           ) : (
             <>
               {game.note ? (
-                <p className="text-gray-300 mt-2 text-sm italic">"{game.note}"</p>
+                <p className="text-gray-300 mt-2 text-sm italic"></p>
               ) : (
                 <p className="text-gray-500 mt-2 text-sm italic">Sin nota</p>
               )}
