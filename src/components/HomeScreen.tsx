@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import type { GameHistory } from '../types';
 import { GameHistoryList } from './GameHistory';
+import { AddCircle24Filled } from '@fluentui/react-icons';
 
 interface HomeScreenProps {
   gameHistory: GameHistory[];
@@ -72,7 +73,7 @@ export function HomeScreen({
                          hover:bg-primary/90 transition-all duration-300 ease-in-out flex items-center justify-center
                          ${isHeaderCompact ? 'text-sm ml-2 shrink-0' : 'w-full py-3 text-lg font-semibold'}`}
               >
-                <span className="mr-2">🃏</span> 
+                <AddCircle24Filled className='mx-2'></AddCircle24Filled>
                 {isHeaderCompact ? 'Nueva' : 'Nueva Partida'}
               </button>
             </div>
