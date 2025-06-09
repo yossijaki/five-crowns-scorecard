@@ -48,7 +48,7 @@ export const subjects = [
   "Ratón", "Zorro", "Gato", "Perro", "Lobo", 
   "Tigre", "León", "Oso", "Mono", "Elefante", 
   "Conejo", "Panda", "Koala", "Búho", "Águila", 
-  "Delfín", "Tortuga", "Pingüino", "Canguro", "Jirafa"
+  "Delfín", "Gorila", "Pingüino", "Canguro", "Caballo"
 ]
 
 export const adjectives = [
