@@ -54,7 +54,7 @@ export function LeaderIndicator({ players }: LeaderIndicatorProps) {
     >
       <div className="bg-dark-100 rounded-xl shadow-lg p-4 max-w-xs">
         <h3 className="text-sm text-gray-400 mb-2">
-          {isTie ? '🏆 Líderes actuales' : '🏆 Líder actual'}
+          {isTie ? 'Líderes actuales' : 'Líder actual'}
         </h3>
         <div className="space-y-2">
           {leaders.map((leader, index) => (

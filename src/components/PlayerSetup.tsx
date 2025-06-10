@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import type { Player } from '../types'
 import { generatePlayerId, generateRandomName, PLAYER_COLORS, getRandomUniqueColors } from '../utils'
+import { Home24Filled, Delete24Filled, AddCircle24Filled } from '@fluentui/react-icons'
 
 interface PlayerSetupProps {
   onStartGame: (players: Player[]) => void
@@ -136,7 +137,7 @@ export function PlayerSetup({ onStartGame, onGoHome }: PlayerSetupProps) {
             className="p-2 bg-dark-300 text-white rounded-lg hover:bg-dark-200 flex items-center"
             aria-label="Volver al inicio"
           >
-            <span className="text-lg">🏠</span>
+            <span className="text-lg"><Home24Filled></Home24Filled></span>
           </button>
           <h1 className="text-2xl font-bold text-white">Configurar Jugadores</h1>
         </div>
@@ -207,7 +208,7 @@ export function PlayerSetup({ onStartGame, onGoHome }: PlayerSetupProps) {
                     className="p-2 text-red-400 hover:text-red-300"
                     aria-label={`Eliminar jugador ${name || index + 1}`}
                   >
-                    ✕
+                    <Delete24Filled></Delete24Filled>
                   </button>
                 )}
               </div>
@@ -226,7 +227,7 @@ export function PlayerSetup({ onStartGame, onGoHome }: PlayerSetupProps) {
                 className="w-full py-2 px-4 bg-dark-300 text-white rounded-lg 
                          hover:bg-zinc-700 transition-colors flex items-center justify-center"
               >
-                <span className="mr-2">+</span> Añadir jugador
+                <span className="mr-2"><AddCircle24Filled></AddCircle24Filled></span> Añadir jugador
               </button>
             )}
             <button

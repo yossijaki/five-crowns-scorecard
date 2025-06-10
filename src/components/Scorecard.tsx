@@ -3,6 +3,7 @@ import type { Player } from '../types';
 import { calculateTotal, getColorClasses } from '../utils';
 import { ScoreboardModal } from './ScoreboardModal';
 import { EditScoreModal } from './EditScoreModal';
+import { TableEdit24Filled, Flag24Filled, Trophy16Filled } from '@fluentui/react-icons';
 
 interface ScorecardProps {
   players: Player[];
@@ -129,7 +130,7 @@ export function Scorecard({
               className="flex items-center justify-center bg-dark-300 text-white p-2 rounded-lg hover:bg-dark-200"
               aria-label="Ver marcador completo"
             >
-              <span className="text-lg">📊</span>
+              <span><TableEdit24Filled></TableEdit24Filled></span>
             </button>
             <div className="text-center">
               <h4 className="text-xl font-bold text-white">
@@ -142,7 +143,7 @@ export function Scorecard({
               aria-label="Finalizar partida"
               title="Finalizar partida"
             >
-              <span className="text-lg">🏁</span>
+              <span><Flag24Filled></Flag24Filled></span>
             </button>
           </div>
 
@@ -177,8 +178,8 @@ export function Scorecard({
                         >
                           {player.name}
                           {isLeader && (
-                            <span className="ml-2 text-xs bg-primary/20 text-primary px-2 py-1 rounded-full">
-                              🏆
+                            <span className="ml-2 text-xs bg-primary/20 text-yellow-500 px-2 py-1 rounded-full">
+                              <Trophy16Filled></Trophy16Filled>
                             </span>
                           )}
                         </label>

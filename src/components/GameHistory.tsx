@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { GameHistory } from '../types';
 import { formatDate } from '../utils';
+import { CheckmarkCircle16Filled, TextEditStyle24Filled, ArrowCounterclockwise24Filled, Delete24Filled } from '@fluentui/react-icons';
 
 interface GameHistoryProps {
   history: GameHistory[];
@@ -57,7 +58,7 @@ export function GameHistoryList({
             <div>
               <h3 className="font-semibold text-white text-lg flex items-center">
                 {game.note || formatDate(game.date, true)}
-                {game.isComplete && <span className="ml-2 text-green-500 text-sm">✓</span>}
+                {game.isComplete && <span className="ml-2 text-green-500"><CheckmarkCircle16Filled></CheckmarkCircle16Filled></span>}
               </h3>
               <p className="text-xs text-gray-400">{formatDate(game.date)}</p>
             </div>
@@ -67,21 +68,21 @@ export function GameHistoryList({
                 className="p-2 text-gray-400 hover:text-white rounded-full"
                 title="Editar nota"
               >
-                ✏️
+                <TextEditStyle24Filled></TextEditStyle24Filled>
               </button>
               <button
                 onClick={() => onLoadGame(game.id)}
-                className="p-2 text-blue-400 hover:text-blue-300 rounded-full"
+                className="p-2 text-gray-400 hover:text-white rounded-full"
                 title="Cargar partida"
               >
-                🔄
+                <ArrowCounterclockwise24Filled></ArrowCounterclockwise24Filled>
               </button>
               <button
                 onClick={() => handleDeleteGame(game.id)}
-                className="p-2 text-red-400 hover:text-red-300 rounded-full"
+                className="p-2 text-gray-400 hover:text-white rounded-full"
                 title="Eliminar partida"
               >
-                🗑️
+                <Delete24Filled></Delete24Filled>
               </button>
             </div>
           </div>

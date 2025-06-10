@@ -9,6 +9,7 @@ import type { AppState, GameState, Player, GameHistory } from './types'
 import { generateGameId, getCurrentDate } from './utils'
 import { App as CapacitorApp } from '@capacitor/app'
 import type { PluginListenerHandle } from '@capacitor/core'
+import { Home24Filled, ArrowRepeatAll24Filled, PlayingCardsFilled } from '@fluentui/react-icons';
 
 const initialGameState: GameState = {
   players: [],
@@ -463,11 +464,11 @@ function App() {
                        hover:bg-dark-200 transition-colors flex items-center"
               aria-label="Volver al inicio"
             >
-              <span className="mr-1">🏠</span> Inicio
+              <span className="mr-1"><Home24Filled></Home24Filled></span> Inicio
             </button>
           <h1 className="text-lg font-semibold text-white flex flex-col items-center">
             <span className="flex items-center">
-              <span className="mr-2">🃏</span> Ronda {currentGame.currentRound}
+              <span className="mr-2"><PlayingCardsFilled className="h-6 w-6"></PlayingCardsFilled></span> Ronda {currentGame.currentRound}
             </span>
             <span className="text-xs text-gray-400">
               {getCardsForRound(currentGame.currentRound)} cartas por jugador
@@ -481,7 +482,7 @@ function App() {
                        hover:bg-dark-200 transition-colors flex items-center"
               aria-label="Iniciar nuevo juego"
             >
-              <span className="mr-1">🔄</span> Nuevo
+              <span className="mr-1"><ArrowRepeatAll24Filled></ArrowRepeatAll24Filled></span> Nuevo
             </button>
           </div>
         </div>

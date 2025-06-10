@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { Player } from '../types'
 import { calculateTotal } from '../utils'
+import { TableEdit24Filled, EditProhibited16Filled, Edit20Filled } from '@fluentui/react-icons'
 
 interface ScoreboardModalProps {
   players: Player[]
@@ -64,7 +65,7 @@ export function ScoreboardModal({
       >
         <div className="flex justify-between items-center mb-4 sticky top-0 bg-dark-100 z-10 pb-2">
           <h2 className="text-xl font-semibold text-white flex items-center">
-            <span className="mr-2">📊</span> Marcador completo
+            <span className="mr-2"><TableEdit24Filled></TableEdit24Filled></span> Marcador completo
           </h2>
           <button 
             onClick={onClose}
@@ -95,10 +96,10 @@ export function ScoreboardModal({
                           title="Editar puntuación"
                           aria-label={`Editar puntuación de ronda ${round}`}
                         >
-                          <span className="bg-primary/10 p-1 rounded-full">✏️</span>
+                          <span className="bg-primary/10 p-1 rounded-full"><Edit20Filled></Edit20Filled></span>
                         </button>
                       ) : (
-                        <span className="bg-secondary/10 p-1 mt-1 rounded-full">⛔</span>
+                        <span className="bg-secondary/10 p-1 mt-1 rounded-full"><EditProhibited16Filled></EditProhibited16Filled></span>
                       )}
                     </div>
                   </th>

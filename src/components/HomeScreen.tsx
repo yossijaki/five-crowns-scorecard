@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import type { GameHistory } from '../types';
 import { GameHistoryList } from './GameHistory';
-import { AddCircle24Filled } from '@fluentui/react-icons';
+import { AddCircle24Filled, History24Filled } from '@fluentui/react-icons';
 
 interface HomeScreenProps {
   gameHistory: GameHistory[];
@@ -86,7 +86,7 @@ export function HomeScreen({
             <div className="bg-dark-100 rounded-xl shadow-lg p-4">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-white flex items-center">
-                  <span className="mr-2">📜</span> Historial
+                  <span className="mr-2"><History24Filled></History24Filled></span> Historial
                 </h2>
                 
                 <div className="flex bg-dark-300 rounded-lg p-1">
