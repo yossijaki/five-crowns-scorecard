@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Player } from '../types';
 import { calculateTotal, formatDate } from '../utils';
+import { Home24Filled, ArrowRepeatAll24Filled, Trophy24Filled, Edit20Filled, Crown20Filled, Table24Filled, Checkmark16Filled } from '@fluentui/react-icons';
 
 interface GameResultsProps {
   players: Player[];
@@ -45,10 +46,10 @@ export function GameResults({
                         hover:bg-dark-200 transition-colors flex items-center"
               aria-label="Volver al inicio"
             >
-              <span className="mr-1">🏠</span> Inicio
+              <span className="mr-1"><Home24Filled></Home24Filled></span> Inicio
             </button>
             <h1 className="text-lg font-semibold text-white flex items-center">
-              <span className="mr-2">🏆</span>Resultados
+              <span className="mr-2"><Trophy24Filled className="text-yellow-500"></Trophy24Filled></span>Resultados
             </h1>
             <button
               onClick={onNewGame}
@@ -56,7 +57,7 @@ export function GameResults({
                         hover:bg-dark-200 transition-colors flex items-center"
               aria-label="Iniciar nuevo juego"
             >
-              <span className="mr-1">🔄</span> Nuevo
+              <span className="mr-1"><ArrowRepeatAll24Filled></ArrowRepeatAll24Filled></span> Nuevo
             </button>
           </div>
         </div>
@@ -68,8 +69,8 @@ export function GameResults({
                 <h2 className="text-xl font-bold text-white">Partida finalizada</h2>
                 <p className="text-sm text-gray-400">{formatDate(gameDate)}</p>
               </div>
-              <div className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">
-                Completada
+              <div className="bg-green-500/30 text-green-500 px-3 py-1 rounded-full text-sm">
+                <Checkmark16Filled></Checkmark16Filled> Completada
               </div>
             </div>
 
@@ -108,14 +109,14 @@ export function GameResults({
                   <p className="text-gray-300 text-sm italic">"{note}"</p>
                 ) : (
                   <p className="text-gray-500 text-sm italic flex items-center">
-                    <span className="mr-2">✏️</span> Añadir nota a esta partida...
+                    <span className="mr-2"><Edit20Filled className="text-gray-300 hover:text-gray-100"></Edit20Filled></span> Añadir nota a esta partida...
                   </p>
                 )}
               </div>
             )}
 
             <h3 className="text-lg font-semibold mb-3 text-white flex items-center">
-              <span className="mr-2">🏆</span> Clasificación
+              <span className="mr-2"><Trophy24Filled className="text-yellow-500"></Trophy24Filled></span> Clasificación
             </h3>
             
             {sortedPlayers.map((player, index) => (
@@ -134,7 +135,7 @@ export function GameResults({
                 }}
               >
                 <span className="font-semibold text-white">
-                  {index === 0 && <span className="mr-1">👑</span>}
+                  {index === 0 && <span className="mr-1"><Crown20Filled className="text-yellow-500"></Crown20Filled></span>}
                   {index + 1}. {player.name}
                 </span>
                 <span className="float-right text-gray-300">
@@ -146,7 +147,7 @@ export function GameResults({
 
           <div className="bg-dark-100 rounded-xl shadow-lg p-4">
             <h3 className="text-lg font-semibold mb-3 text-white flex items-center">
-              <span className="mr-2">📊</span> Detalles de puntuación
+              <span className="mr-2"><Table24Filled></Table24Filled></span> Detalles de puntuación
             </h3>
             
             <div className="overflow-x-auto">
