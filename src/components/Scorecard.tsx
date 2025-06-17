@@ -3,7 +3,8 @@ import type { Player } from '../types';
 import { calculateTotal, getColorClasses } from '../utils';
 import { ScoreboardModal } from './ScoreboardModal';
 import { EditScoreModal } from './EditScoreModal';
-import { TableEdit24Filled, Flag24Filled, Trophy16Filled } from '@fluentui/react-icons';
+import { TableEdit24Filled, Flag24Filled, Trophy16Filled, Delete24Filled } from '@fluentui/react-icons';
+import { Dialog } from '@headlessui/react';
 
 interface ScorecardProps {
   players: Player[];
@@ -12,6 +13,7 @@ interface ScorecardProps {
   isGameComplete: boolean;
   onUpdatePlayerScores: (players: Player[]) => void;
   onFinishGame: () => void;
+  onDeletePlayer: (playerId: string) => void;
   getCardsForRound: (round: number) => number;
 }
 
@@ -22,6 +24,7 @@ export function Scorecard({
   isGameComplete,
   onUpdatePlayerScores,
   onFinishGame,
+  onDeletePlayer,
   getCardsForRound,
 }: ScorecardProps) {
   const [currentScores, setCurrentScores] = useState<string[]>(
@@ -31,6 +34,7 @@ export function Scorecard({
   const [editingRound, setEditingRound] = useState<number | null>(null);
   const [editScores, setEditScores] = useState<string[]>([]);
   const [activeInputIndex, setActiveInputIndex] = useState<number | null>(null);
+  const [playerToDelete, setPlayerToDelete] = useState<Player | null>(null);
 
   const handleScoreChange = (index: number, value: string) => {
     if (value === '' || /^\d+$/.test(value)) {
@@ -119,6 +123,18 @@ export function Scorecard({
   // Check if all scores are filled
   const allScoresFilled = currentScores.every((score) => score !== '');
 
+  const handleDeleteRequest = (player: Player) => {
+    if (players.length <= 2) return;
+    setPlayerToDelete(player);
+  };
+
+  const handleConfirmDelete = () => {
+    if (playerToDelete) {
+      onDeletePlayer(playerToDelete.id);
+      setPlayerToDelete(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-dark-200 flex flex-col">
       <div className="max-w-sm mx-auto w-full flex flex-col px-4 mt-4">
@@ -183,6 +199,15 @@ export function Scorecard({
                             </span>
                           )}
                         </label>
+                        {players.length > 2 && (
+                          <button
+                            onClick={() => handleDeleteRequest(player)}
+                            className="ml-2 p-1.5 text-gray-400 hover:text-red-500 transition-colors rounded-lg hover:bg-dark-200"
+                            title={`Eliminar a ${player.name}`}
+                          >
+                            <Delete24Filled />
+                          </button>
+                        )}
                       </div>
                       {isLeader && (
                         <span className="text-xs text-primary ml-5">
@@ -214,6 +239,7 @@ export function Scorecard({
                     }}
                     disabled={isGameComplete}
                   />
+
                 </div>
               );
             })}
@@ -253,6 +279,43 @@ export function Scorecard({
           onCancel={() => setEditingRound(null)}
         />
       )}
+
+      {/* Delete player confirmation dialog */}
+      <Dialog
+        open={playerToDelete !== null}
+        onClose={() => setPlayerToDelete(null)}
+        className="relative z-50"
+      >
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+            <Dialog.Title className="text-lg font-medium leading-6 text-gray-900">
+              Confirmar eliminación
+            </Dialog.Title>
+            <div className="mt-2">
+              <p className="text-sm text-gray-500">
+                ¿Seguro que deseas eliminar a {playerToDelete?.name} del juego? Esta acción no podrá deshacerse.
+              </p>
+            </div>
+            <div className="mt-4 flex justify-end space-x-3">
+              <button
+                type="button"
+                className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                onClick={() => setPlayerToDelete(null)}
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                className="inline-flex justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+                onClick={handleConfirmDelete}
+              >
+                Eliminar
+              </button>
+            </div>
+          </Dialog.Panel>
+        </div>
+      </Dialog>
     </div>
   );
 }

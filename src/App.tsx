@@ -419,6 +419,24 @@ function App() {
     };
   }, [currentGame, showResults, appState]);
 
+  const handleDeletePlayer = (playerId: string) => {
+    // Eliminar jugador de la partida actual
+    const updatedPlayers = currentGame.players.filter(p => p.id !== playerId);
+    // Eliminar jugador de todas las partidas del historial
+    const updatedGameHistory = gameHistory.map(game => ({
+      ...game,
+      players: game.players.filter(p => p.id !== playerId),
+    }));
+    setAppState({
+      ...appState,
+      currentGame: {
+        ...currentGame,
+        players: updatedPlayers,
+      },
+      gameHistory: updatedGameHistory,
+    });
+  };
+
   if (!currentGame.isGameStarted) {
     return (
       <HomeScreen
@@ -497,6 +515,7 @@ function App() {
           onUpdatePlayerScores={handleUpdatePlayerScores}
           onFinishGame={handleFinishGame}
           getCardsForRound={getCardsForRound}
+          onDeletePlayer={handleDeletePlayer}
         />
       </div>
 
