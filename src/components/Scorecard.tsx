@@ -3,8 +3,8 @@ import type { Player } from '../types';
 import { calculateTotal, getColorClasses } from '../utils';
 import { ScoreboardModal } from './ScoreboardModal';
 import { EditScoreModal } from './EditScoreModal';
-import { TableEdit24Filled, Flag24Filled, Trophy16Filled, Delete24Filled } from '@fluentui/react-icons';
-import { Dialog } from '@headlessui/react';
+import { TableEdit24Filled, Flag24Filled, Trophy16Filled, Delete20Filled } from '@fluentui/react-icons';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 
 interface ScorecardProps {
   players: Player[];
@@ -205,7 +205,7 @@ export function Scorecard({
                             className="ml-2 p-1.5 text-gray-400 hover:text-red-500 transition-colors rounded-lg hover:bg-dark-200"
                             title={`Eliminar a ${player.name}`}
                           >
-                            <Delete24Filled />
+                            <Delete20Filled />
                           </button>
                         )}
                       </div>
@@ -288,12 +288,12 @@ export function Scorecard({
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-            <Dialog.Title className="text-lg font-medium leading-6 text-gray-900">
+          <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-dark-100 p-6 text-left align-middle shadow-xl transition-all">
+            <DialogTitle className="text-lg font-medium leading-6 text-gray-200">
               Confirmar eliminación
-            </Dialog.Title>
+            </DialogTitle>
             <div className="mt-2">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-300">
                 ¿Seguro que deseas eliminar a {playerToDelete?.name} del juego? Esta acción no podrá deshacerse.
               </p>
             </div>
@@ -313,7 +313,7 @@ export function Scorecard({
                 Eliminar
               </button>
             </div>
-          </Dialog.Panel>
+          </DialogPanel>
         </div>
       </Dialog>
     </div>

@@ -10,6 +10,7 @@ import { generateGameId, getCurrentDate } from './utils'
 import { App as CapacitorApp } from '@capacitor/app'
 import type { PluginListenerHandle } from '@capacitor/core'
 import { Home24Filled, ArrowRepeatAll24Filled, PlayingCardsFilled } from '@fluentui/react-icons';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 
 const initialGameState: GameState = {
   players: [],
@@ -28,6 +29,7 @@ function App() {
   const [showNoteModal, setShowNoteModal] = useState(false)
   const [tempGameId, setTempGameId] = useState<string | null>(null)
   const [showResults, setShowResults] = useState(false)
+  let [isOpen, setIsOpen] = useState(false);
 
   const { currentGame, gameHistory } = appState
 
@@ -476,14 +478,32 @@ function App() {
     <div>
       <div className="fixed top-0 left-0 right-0 bg-dark-200 border-b border-dark-300 p-4 z-10">
         <div className="max-w-md mx-auto flex justify-between items-center">
-        <button
-              onClick={handleGoHome}
-              className="px-4 py-2 bg-dark-100 text-white rounded-lg 
-                       hover:bg-dark-200 transition-colors flex items-center"
-              aria-label="Volver al inicio"
+          {/* <button
+            onClick={ () => setIsOpen(true) }
+            className="px-4 py-2 bg-dark-100 text-white rounded-lg 
+                      hover:bg-dark-200 transition-colors flex items-center"
+            aria-label="Volver al inicio"
+          >
+            <span className="mr-1"><Home24Filled></Home24Filled></span> Inicio</button>
+            <Dialog
+              open={isOpen}
+              onClose={() => setIsOpen(false)}
+              className="relative z-50"
             >
-              <span className="mr-1"><Home24Filled></Home24Filled></span> Inicio
-            </button>
+              <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+                  <DialogTitle className="font-bold">Deactivate account</DialogTitle>
+                </DialogPanel>
+              </div>
+            </Dialog>
+          <button
+            onClick={handleGoHome}
+            className="px-4 py-2 bg-dark-100 text-white rounded-lg 
+                      hover:bg-dark-200 transition-colors flex items-center"
+            aria-label="Volver al inicio"
+          >
+            <span className="mr-1"><Home24Filled></Home24Filled></span> Inicio
+          </button> */}
           <h1 className="text-lg font-semibold text-white flex flex-col items-center">
             <span className="flex items-center">
               <span className="mr-2"><PlayingCardsFilled className="h-6 w-6"></PlayingCardsFilled></span> Ronda {currentGame.currentRound}
@@ -493,7 +513,6 @@ function App() {
             </span>
           </h1>
           <div className="flex space-x-2">
-            
             <button
               onClick={handleNewGame}
               className="px-4 py-2 bg-dark-100 text-white rounded-lg 
