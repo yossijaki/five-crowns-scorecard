@@ -478,7 +478,7 @@ function App() {
     <div>
       <div className="fixed top-0 left-0 right-0 bg-dark-200 border-b border-dark-300 p-4 z-10">
         <div className="max-w-md mx-auto flex justify-between items-center">
-          {/* <button
+          <button
             onClick={ () => setIsOpen(true) }
             className="px-4 py-2 bg-dark-100 text-white rounded-lg 
                       hover:bg-dark-200 transition-colors flex items-center"
@@ -490,9 +490,15 @@ function App() {
               onClose={() => setIsOpen(false)}
               className="relative z-50"
             >
-              <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-                <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
-                  <DialogTitle className="font-bold">Deactivate account</DialogTitle>
+              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+              <div className="fixed inset-0 flex items-center justify-center p-4">
+                <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-dark-100 p-6 text-left align-middle shadow-xl transition-all">
+                  <DialogTitle className="font-bold">Guardar y volver al inicio</DialogTitle>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-300">
+                      ¿Seguro que deseas volver al inicio? La partida se guardara.
+                    </p>
+                  </div>
                 </DialogPanel>
               </div>
             </Dialog>
@@ -503,7 +509,7 @@ function App() {
             aria-label="Volver al inicio"
           >
             <span className="mr-1"><Home24Filled></Home24Filled></span> Inicio
-          </button> */}
+          </button>
           <h1 className="text-lg font-semibold text-white flex flex-col items-center">
             <span className="flex items-center">
               <span className="mr-2"><PlayingCardsFilled className="h-6 w-6"></PlayingCardsFilled></span> Ronda {currentGame.currentRound}
