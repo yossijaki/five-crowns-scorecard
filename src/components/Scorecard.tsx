@@ -163,11 +163,10 @@ export function Scorecard({
             </div>
             <button
               onClick={() => setIsFinishGameDialogOpen(true)}
-              className="px-4 py-2 bg-dark-100 text-white rounded-lg 
-                      hover:bg-dark-200 transition-colors flex items-center"
+              className="bg-dark-300 text-white p-2 rounded-lg hover:bg-dark-200 transition-colors flex items-center"
               aria-label="Finalizar partida"
             >
-              <span className="mr-1"><Flag24Filled /></span>
+              <span className="m-auto"><Flag24Filled /></span>
             </button>
             <Dialog
               open={isFinishGameDialogOpen}
