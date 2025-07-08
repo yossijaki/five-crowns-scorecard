@@ -219,7 +219,7 @@ export function Scorecard({
                     borderLeftColor: isLeader ? player.color : "transparent",
                   }}
                 >
-                  <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center mb-2">
                     <div className="flex flex-col">
                       <div className="flex items-center">
                         <div
@@ -237,15 +237,6 @@ export function Scorecard({
                             </span>
                           )}
                         </label>
-                        {players.length > 2 && (
-                          <button
-                            onClick={() => handleDeleteRequest(player)}
-                            className="ml-2 p-1.5 text-gray-400 hover:text-red-500 transition-colors rounded-lg hover:bg-dark-200"
-                            title={`Eliminar a ${player.name}`}
-                          >
-                            <Delete20Filled />
-                          </button>
-                        )}
                       </div>
                       {isLeader && (
                         <span className="text-xs text-primary ml-5">
@@ -253,9 +244,18 @@ export function Scorecard({
                         </span>
                       )}
                     </div>
-                    <span className="text-xs text-gray-200">
+                    <span className="ml-auto mr-2 text-xs text-gray-200">
                       Total: {calculateTotal(player.scores)}
                     </span>
+                    {players.length > 2 && (
+                      <button
+                        onClick={() => handleDeleteRequest(player)}
+                        className="ml-2 p-1.5 text-gray-400 hover:text-red-500 transition-colors rounded-lg hover:bg-dark-200"
+                        title={`Eliminar a ${player.name}`}
+                      >
+                        <Delete20Filled />
+                      </button>
+                    )}
                   </div>
                   <input
                     id={`score-input-${index}`}
