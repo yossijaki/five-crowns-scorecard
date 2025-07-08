@@ -62,8 +62,8 @@ function App() {
     }
 
     // Save to history if not already there
-    const gameInHistory = gameHistory.some(g => 
-      g.players.some(p => p.id === updatedPlayers[0]?.id) && 
+    const gameInHistory = gameHistory.some(g =>
+      g.players.some(p => p.id === updatedPlayers[0]?.id) &&
       g.date > getCurrentDate().substring(0, 10)
     )
 
@@ -82,7 +82,7 @@ function App() {
         currentGame: updatedGame,
         gameHistory: [...gameHistory, newGameHistory]
       })
-      
+
       if (isComplete) {
         setShowResults(true)
       }
@@ -110,7 +110,7 @@ function App() {
         currentGame: updatedGame,
         gameHistory: updatedHistory
       })
-      
+
       if (isComplete) {
         setShowResults(true)
       }
@@ -121,11 +121,11 @@ function App() {
     if (window.confirm('¿Quieres iniciar un nuevo juego? La partida actual se guardará en el historial.')) {
       // Save current game to history if it's not already there
       if (currentGame.players.length > 0) {
-        const gameInHistory = gameHistory.some(g => 
+        const gameInHistory = gameHistory.some(g =>
           g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
           g.date > getCurrentDate().substring(0, 10)
         )
-        
+
         if (!gameInHistory) {
           const newGameHistory: GameHistory = {
             id: generateGameId(),
@@ -136,7 +136,7 @@ function App() {
             isComplete: false,
             finalRound: currentGame.currentRound,
           }
-          
+
           setAppState({
             currentGame: {
               ...initialGameState,
@@ -162,7 +162,7 @@ function App() {
           }
         })
       }
-      
+
       setShowResults(false)
     }
   }
@@ -205,7 +205,7 @@ function App() {
       }
 
       // Find if game is already in history
-      const existingGameIndex = gameHistory.findIndex(g => 
+      const existingGameIndex = gameHistory.findIndex(g =>
         g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
         g.date > getCurrentDate().substring(0, 10)
       )
@@ -224,7 +224,7 @@ function App() {
           currentGame: updatedGame,
           gameHistory: updatedHistory
         })
-        
+
         setShowResults(true)
       } else {
         // Add new game to history
@@ -244,7 +244,7 @@ function App() {
           currentGame: updatedGame,
           gameHistory: [...gameHistory, newGameHistory]
         })
-        
+
         setShowResults(true)
       }
     }
@@ -313,7 +313,7 @@ function App() {
         isGameComplete: gameToLoad.isComplete,
       }
     })
-    
+
     if (gameToLoad.isComplete) {
       setShowResults(true)
     } else {
@@ -332,34 +332,34 @@ function App() {
   const handleGoHome = () => {
     // If there's an active game, confirm before going home
     if (currentGame.players.length > 0 && !currentGame.isGameComplete) {
-      if (window.confirm('¿Quieres volver al inicio? La partida actual se guardará en el historial.')) {
-        // Save current game to history if it's not already there
-        const gameInHistory = gameHistory.some(g => 
-          g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
-          g.date > getCurrentDate().substring(0, 10)
-        )
-        
-        if (!gameInHistory && currentGame.players.length > 0) {
-          const newGameHistory: GameHistory = {
-            id: generateGameId(),
-            date: getCurrentDate(),
-            players: currentGame.players,
-            title: '',
-            note: '',
-            isComplete: false,
-            finalRound: currentGame.currentRound,
-          }
-          
-          setAppState({
-            currentGame: initialGameState,
-            gameHistory: [...gameHistory, newGameHistory]
-          })
-        } else {
-          setAppState({
-            ...appState,
-            currentGame: initialGameState
-          })
+      // Save current game to history if it's not already there
+      const gameInHistory = gameHistory.some(g =>
+        g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
+        g.date > getCurrentDate().substring(0, 10)
+      )
+
+      setIsOpen(false);
+
+      if (!gameInHistory && currentGame.players.length > 0) {
+        const newGameHistory: GameHistory = {
+          id: generateGameId(),
+          date: getCurrentDate(),
+          players: currentGame.players,
+          title: '',
+          note: '',
+          isComplete: false,
+          finalRound: currentGame.currentRound,
         }
+
+        setAppState({
+          currentGame: initialGameState,
+          gameHistory: [...gameHistory, newGameHistory]
+        })
+      } else {
+        setAppState({
+          ...appState,
+          currentGame: initialGameState
+        })
       }
     } else {
       // No active game or game is complete, just go home
@@ -368,14 +368,14 @@ function App() {
         currentGame: initialGameState
       })
     }
-    
+
     setShowResults(false)
   }
 
   const getCardsForRound = (round: number) => round + 2;
 
   // Find current game in history to get its ID and note
-  const currentGameInHistory = gameHistory.find(g => 
+  const currentGameInHistory = gameHistory.find(g =>
     g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
     g.date > getCurrentDate().substring(0, 10)
   );
@@ -453,13 +453,13 @@ function App() {
 
   if (currentGame.isGameStarted && currentGame.players.length === 0) {
     return (
-      <PlayerSetup 
-        onStartGame={handleStartGame} 
+      <PlayerSetup
+        onStartGame={handleStartGame}
         onGoHome={handleGoHome}
       />
     )
   }
-  
+
   if (showResults && currentGame.isGameComplete) {
     return (
       <GameResults
@@ -479,37 +479,45 @@ function App() {
       <div className="fixed top-0 left-0 right-0 bg-dark-200 border-b border-dark-300 p-4 z-10">
         <div className="max-w-md mx-auto flex justify-between items-center">
           <button
-            onClick={ () => setIsOpen(true) }
+            onClick={() => setIsOpen(true)}
             className="px-4 py-2 bg-dark-100 text-white rounded-lg 
                       hover:bg-dark-200 transition-colors flex items-center"
             aria-label="Volver al inicio"
           >
-            <span className="mr-1"><Home24Filled></Home24Filled></span> Inicio</button>
-            <Dialog
-              open={isOpen}
-              onClose={() => setIsOpen(false)}
-              className="relative z-50"
-            >
-              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-              <div className="fixed inset-0 flex items-center justify-center p-4">
-                <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-dark-100 p-6 text-left align-middle shadow-xl transition-all">
-                  <DialogTitle className="font-bold">Guardar y volver al inicio</DialogTitle>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-300">
-                      ¿Seguro que deseas volver al inicio? La partida se guardara.
-                    </p>
-                  </div>
-                </DialogPanel>
-              </div>
-            </Dialog>
-          <button
-            onClick={handleGoHome}
-            className="px-4 py-2 bg-dark-100 text-white rounded-lg 
-                      hover:bg-dark-200 transition-colors flex items-center"
-            aria-label="Volver al inicio"
+            <span className="mr-1"><Home24Filled></Home24Filled></span>Inicio</button>
+          <Dialog
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+            className="relative z-50"
           >
-            <span className="mr-1"><Home24Filled></Home24Filled></span> Inicio
-          </button>
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+            <div className="fixed inset-0 flex items-center justify-center p-4">
+              <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-dark-100 p-6 text-left align-middle shadow-xl transition-all">
+                <DialogTitle className="font-bold">¿Deseas volver a la pantalla de inicio?</DialogTitle>
+                <div className="mt-2">
+                  <p className="text-sm text-gray-300">
+                    La partida se guardará
+                  </p>
+                </div>
+                <div className="mt-4 flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                    onClick={ () => setIsOpen(false) }
+                  >
+                    No
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-violet-500 px-4 py-2 text-sm font-medium text-white"
+                    onClick={handleGoHome}
+                  >
+                    Si
+                  </button>
+                </div>
+              </DialogPanel>
+            </div>
+          </Dialog>
           <h1 className="text-lg font-semibold text-white flex flex-col items-center">
             <span className="flex items-center">
               <span className="mr-2"><PlayingCardsFilled className="h-6 w-6"></PlayingCardsFilled></span> Ronda {currentGame.currentRound}
@@ -530,7 +538,7 @@ function App() {
           </div>
         </div>
       </div>
-      
+
       <div className="pt-16 pb-20">
         <Scorecard
           players={currentGame.players}
