@@ -1,10 +1,15 @@
-import { useState } from 'react';
-import type { Player } from '../types';
-import { calculateTotal, getColorClasses } from '../utils';
-import { ScoreboardModal } from './ScoreboardModal';
-import { EditScoreModal } from './EditScoreModal';
-import { TableEdit24Filled, Flag24Filled, Trophy16Filled, Delete20Filled } from '@fluentui/react-icons';
-import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
+import { useState } from "react";
+import type { Player } from "../types";
+import { calculateTotal, getColorClasses } from "../utils";
+import { ScoreboardModal } from "./ScoreboardModal";
+import { EditScoreModal } from "./EditScoreModal";
+import {
+  TableEdit24Filled,
+  Flag24Filled,
+  Trophy16Filled,
+  Delete20Filled,
+} from "@fluentui/react-icons";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 interface ScorecardProps {
   players: Player[];
@@ -28,16 +33,17 @@ export function Scorecard({
   getCardsForRound,
 }: ScorecardProps) {
   const [currentScores, setCurrentScores] = useState<string[]>(
-    new Array(players.length).fill('')
+    new Array(players.length).fill("")
   );
   const [showScoreboard, setShowScoreboard] = useState(false);
   const [editingRound, setEditingRound] = useState<number | null>(null);
   const [editScores, setEditScores] = useState<string[]>([]);
   const [activeInputIndex, setActiveInputIndex] = useState<number | null>(null);
   const [playerToDelete, setPlayerToDelete] = useState<Player | null>(null);
+  const [isFinishGameDialogOpen, setIsFinishGameDialogOpen] = useState(false);
 
   const handleScoreChange = (index: number, value: string) => {
-    if (value === '' || /^\d+$/.test(value)) {
+    if (value === "" || /^\d+$/.test(value)) {
       const newScores = [...currentScores];
       newScores[index] = value;
       setCurrentScores(newScores);
@@ -46,10 +52,10 @@ export function Scorecard({
 
   const handleSaveRound = () => {
     const numericScores = currentScores.map((score) =>
-      score === '' ? 0 : Number(score)
+      score === "" ? 0 : Number(score)
     );
     onSaveRound(numericScores);
-    setCurrentScores(new Array(players.length).fill(''));
+    setCurrentScores(new Array(players.length).fill(""));
   };
 
   const getLeaders = () => {
@@ -72,7 +78,7 @@ export function Scorecard({
 
     const roundIndex = round - 1;
     const roundScores = players.map(
-      (player) => player.scores[roundIndex]?.toString() || '0'
+      (player) => player.scores[roundIndex]?.toString() || "0"
     );
 
     setEditScores(roundScores);
@@ -106,7 +112,7 @@ export function Scorecard({
 
   // Function to move to next input when Enter is pressed
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
 
       // If this is the last input, save the round
@@ -121,7 +127,7 @@ export function Scorecard({
   };
 
   // Check if all scores are filled
-  const allScoresFilled = currentScores.every((score) => score !== '');
+  const allScoresFilled = currentScores.every((score) => score !== "");
 
   const handleDeleteRequest = (player: Player) => {
     if (players.length <= 2) return;
@@ -146,7 +152,9 @@ export function Scorecard({
               className="flex items-center justify-center bg-dark-300 text-white p-2 rounded-lg hover:bg-dark-200"
               aria-label="Ver marcador completo"
             >
-              <span><TableEdit24Filled></TableEdit24Filled></span>
+              <span>
+                <TableEdit24Filled></TableEdit24Filled>
+              </span>
             </button>
             <div className="text-center">
               <h4 className="text-xl font-bold text-white">
@@ -154,13 +162,43 @@ export function Scorecard({
               </h4>
             </div>
             <button
-              onClick={onFinishGame}
-              className="flex items-center justify-center bg-dark-300 text-white p-2 rounded-lg hover:bg-dark-200"
+              onClick={() => setIsFinishGameDialogOpen(true)}
+              className="px-4 py-2 bg-dark-100 text-white rounded-lg 
+                      hover:bg-dark-200 transition-colors flex items-center"
               aria-label="Finalizar partida"
-              title="Finalizar partida"
             >
-              <span><Flag24Filled></Flag24Filled></span>
+              <span className="mr-1"><Flag24Filled /></span>
             </button>
+            <Dialog
+              open={isFinishGameDialogOpen}
+              onClose={() => setIsFinishGameDialogOpen(false)}
+              className="relative z-50"
+            >
+              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+              <div className="fixed inset-0 flex items-center justify-center p-4">
+                <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-dark-100 p-6 text-left align-middle shadow-xl transition-all">
+                  <DialogTitle className="font-bold">
+                    ¿Estás seguro de que quieres finalizar la partida actual?
+                  </DialogTitle>
+                  <div className="mt-4 flex justify-end space-x-3">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                      onClick={() => setIsFinishGameDialogOpen(false)}
+                    >
+                      No
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-violet-500 px-4 py-2 text-sm font-medium text-white"
+                      onClick={onFinishGame}
+                    >
+                      Si
+                    </button>
+                  </div>
+                </DialogPanel>
+              </div>
+            </Dialog>
           </div>
 
           <div className="space-y-3 mb-4">
@@ -175,10 +213,10 @@ export function Scorecard({
                 <div
                   key={player.id}
                   className={`bg-dark-300 p-3 rounded-lg transition-all duration-200 
-                            ${isLeader ? `border-l-4 ${borderClass}` : ''}
-                            ${isActive ? 'ring-2 ring-primary' : ''}`}
+                            ${isLeader ? `border-l-4 ${borderClass}` : ""}
+                            ${isActive ? "ring-2 ring-primary" : ""}`}
                   style={{
-                    borderLeftColor: isLeader ? player.color : 'transparent',
+                    borderLeftColor: isLeader ? player.color : "transparent",
                   }}
                 >
                   <div className="flex justify-between items-center mb-2">
@@ -234,12 +272,11 @@ export function Scorecard({
                              transition-all duration-200`}
                     style={{
                       borderLeftColor: player.color,
-                      borderLeftWidth: '4px',
-                      transform: isActive ? 'scale(1.02)' : 'scale(1)',
+                      borderLeftWidth: "4px",
+                      transform: isActive ? "scale(1.02)" : "scale(1)",
                     }}
                     disabled={isGameComplete}
                   />
-
                 </div>
               );
             })}
@@ -253,7 +290,7 @@ export function Scorecard({
             onClick={handleSaveRound}
             className={`w-full py-3 px-4 bg-primary text-white rounded-lg 
                      transition-colors text-lg font-semibold
-                     ${allScoresFilled ? 'animate-pulse' : 'opacity-90'}`}
+                     ${allScoresFilled ? "animate-pulse" : "opacity-90"}`}
           >
             Siguiente ronda
           </button>
@@ -294,7 +331,8 @@ export function Scorecard({
             </DialogTitle>
             <div className="mt-2">
               <p className="text-sm text-gray-300">
-                ¿Seguro que deseas eliminar a {playerToDelete?.name} del juego? Esta acción no podrá deshacerse.
+                ¿Seguro que deseas eliminar a {playerToDelete?.name} del juego?
+                Esta acción no podrá deshacerse.
               </p>
             </div>
             <div className="mt-4 flex justify-end space-x-3">

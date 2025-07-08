@@ -29,7 +29,8 @@ function App() {
   const [showNoteModal, setShowNoteModal] = useState(false)
   const [tempGameId, setTempGameId] = useState<string | null>(null)
   const [showResults, setShowResults] = useState(false)
-  let [isOpen, setIsOpen] = useState(false);
+  const [isGoHomeDialogOpen, setIsGoHomeDialogOpen] = useState(false);
+  const [isNewGameDialogOpen, setIsNewGameDialogOpen] = useState(false);
 
   const { currentGame, gameHistory } = appState
 
@@ -118,41 +119,31 @@ function App() {
   }
 
   const handleNewGame = () => {
-    if (window.confirm('¿Quieres iniciar un nuevo juego? La partida actual se guardará en el historial.')) {
-      // Save current game to history if it's not already there
-      if (currentGame.players.length > 0) {
-        const gameInHistory = gameHistory.some(g =>
-          g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
-          g.date > getCurrentDate().substring(0, 10)
-        )
+    // Save current game to history if it's not already there
+    if (currentGame.players.length > 0) {
+      const gameInHistory = gameHistory.some(g =>
+        g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
+        g.date > getCurrentDate().substring(0, 10)
+      )
 
-        if (!gameInHistory) {
-          const newGameHistory: GameHistory = {
-            id: generateGameId(),
-            date: getCurrentDate(),
-            players: currentGame.players,
-            title: '',
-            note: '',
-            isComplete: false,
-            finalRound: currentGame.currentRound,
-          }
-
-          setAppState({
-            currentGame: {
-              ...initialGameState,
-              isGameStarted: true,
-            },
-            gameHistory: [...gameHistory, newGameHistory]
-          })
-        } else {
-          setAppState({
-            ...appState,
-            currentGame: {
-              ...initialGameState,
-              isGameStarted: true,
-            }
-          })
+      if (!gameInHistory) {
+        const newGameHistory: GameHistory = {
+          id: generateGameId(),
+          date: getCurrentDate(),
+          players: currentGame.players,
+          title: '',
+          note: '',
+          isComplete: false,
+          finalRound: currentGame.currentRound,
         }
+
+        setAppState({
+          currentGame: {
+            ...initialGameState,
+            isGameStarted: true,
+          },
+          gameHistory: [...gameHistory, newGameHistory]
+        })
       } else {
         setAppState({
           ...appState,
@@ -162,9 +153,18 @@ function App() {
           }
         })
       }
-
-      setShowResults(false)
+    } else {
+      setAppState({
+        ...appState,
+        currentGame: {
+          ...initialGameState,
+          isGameStarted: true,
+        }
+      })
     }
+
+    setShowResults(false)
+    setIsNewGameDialogOpen(false);
   }
 
   const handleUpdatePlayerScores = (players: Player[]) => {
@@ -197,56 +197,54 @@ function App() {
   }
 
   const handleFinishGame = () => {
-    if (window.confirm('¿Estás seguro de que quieres finalizar la partida actual?')) {
-      // Mark current game as complete
-      const updatedGame = {
-        ...currentGame,
-        isGameComplete: true,
+    // Mark current game as complete
+    const updatedGame = {
+      ...currentGame,
+      isGameComplete: true,
+    }
+
+    // Find if game is already in history
+    const existingGameIndex = gameHistory.findIndex(g =>
+      g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
+      g.date > getCurrentDate().substring(0, 10)
+    )
+
+    if (existingGameIndex >= 0) {
+      // Update existing game in history
+      const updatedHistory = [...gameHistory]
+      updatedHistory[existingGameIndex] = {
+        ...updatedHistory[existingGameIndex],
+        players: currentGame.players,
+        isComplete: true,
+        finalRound: currentGame.currentRound,
       }
 
-      // Find if game is already in history
-      const existingGameIndex = gameHistory.findIndex(g =>
-        g.players.some(p => currentGame.players.some(cp => cp.id === p.id)) &&
-        g.date > getCurrentDate().substring(0, 10)
-      )
+      setAppState({
+        currentGame: updatedGame,
+        gameHistory: updatedHistory
+      })
 
-      if (existingGameIndex >= 0) {
-        // Update existing game in history
-        const updatedHistory = [...gameHistory]
-        updatedHistory[existingGameIndex] = {
-          ...updatedHistory[existingGameIndex],
-          players: currentGame.players,
-          isComplete: true,
-          finalRound: currentGame.currentRound,
-        }
-
-        setAppState({
-          currentGame: updatedGame,
-          gameHistory: updatedHistory
-        })
-
-        setShowResults(true)
-      } else {
-        // Add new game to history
-        const newGameHistory: GameHistory = {
-          id: generateGameId(),
-          date: getCurrentDate(),
-          players: currentGame.players,
-          title: '',
-          note: '',
-          isComplete: true,
-          finalRound: currentGame.currentRound,
-        }
-
-        setTempGameId(newGameHistory.id)
-
-        setAppState({
-          currentGame: updatedGame,
-          gameHistory: [...gameHistory, newGameHistory]
-        })
-
-        setShowResults(true)
+      setShowResults(true)
+    } else {
+      // Add new game to history
+      const newGameHistory: GameHistory = {
+        id: generateGameId(),
+        date: getCurrentDate(),
+        players: currentGame.players,
+        title: '',
+        note: '',
+        isComplete: true,
+        finalRound: currentGame.currentRound,
       }
+
+      setTempGameId(newGameHistory.id)
+
+      setAppState({
+        currentGame: updatedGame,
+        gameHistory: [...gameHistory, newGameHistory]
+      })
+
+      setShowResults(true)
     }
   }
 
@@ -338,8 +336,6 @@ function App() {
         g.date > getCurrentDate().substring(0, 10)
       )
 
-      setIsOpen(false);
-
       if (!gameInHistory && currentGame.players.length > 0) {
         const newGameHistory: GameHistory = {
           id: generateGameId(),
@@ -369,7 +365,8 @@ function App() {
       })
     }
 
-    setShowResults(false)
+    setShowResults(false);
+    setIsGoHomeDialogOpen(false);
   }
 
   const getCardsForRound = (round: number) => round + 2;
@@ -479,15 +476,16 @@ function App() {
       <div className="fixed top-0 left-0 right-0 bg-dark-200 border-b border-dark-300 p-4 z-10">
         <div className="max-w-md mx-auto flex justify-between items-center">
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={() => setIsGoHomeDialogOpen(true)}
             className="px-4 py-2 bg-dark-100 text-white rounded-lg 
                       hover:bg-dark-200 transition-colors flex items-center"
             aria-label="Volver al inicio"
           >
-            <span className="mr-1"><Home24Filled></Home24Filled></span>Inicio</button>
+            <span className="mr-1"><Home24Filled></Home24Filled></span>Inicio
+          </button>
           <Dialog
-            open={isOpen}
-            onClose={() => setIsOpen(false)}
+            open={isGoHomeDialogOpen}
+            onClose={() => setIsGoHomeDialogOpen(false)}
             className="relative z-50"
           >
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -503,7 +501,7 @@ function App() {
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
-                    onClick={ () => setIsOpen(false) }
+                    onClick={ () => setIsGoHomeDialogOpen(false) }
                   >
                     No
                   </button>
@@ -526,16 +524,47 @@ function App() {
               {getCardsForRound(currentGame.currentRound)} cartas por jugador
             </span>
           </h1>
-          <div className="flex space-x-2">
-            <button
-              onClick={handleNewGame}
-              className="px-4 py-2 bg-dark-100 text-white rounded-lg 
-                       hover:bg-dark-200 transition-colors flex items-center"
-              aria-label="Iniciar nuevo juego"
-            >
-              <span className="mr-1"><ArrowRepeatAll24Filled></ArrowRepeatAll24Filled></span> Nuevo
-            </button>
-          </div>
+          <button
+            onClick={() => setIsNewGameDialogOpen(true)}
+            className="px-4 py-2 bg-dark-100 text-white rounded-lg 
+                      hover:bg-dark-200 transition-colors flex items-center"
+            aria-label="Volver al inicio"
+          >
+            <span className="mr-1"><ArrowRepeatAll24Filled></ArrowRepeatAll24Filled></span>Nuevo
+          </button>
+          <Dialog
+            open={isNewGameDialogOpen}
+            onClose={() => setIsNewGameDialogOpen(false)}
+            className="relative z-50"
+          >
+            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+            <div className="fixed inset-0 flex items-center justify-center p-4">
+              <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-dark-100 p-6 text-left align-middle shadow-xl transition-all">
+                <DialogTitle className="font-bold">¿Deseas iniciar una nueva partida?</DialogTitle>
+                <div className="mt-2">
+                  <p className="text-sm text-gray-300">
+                    La partida actual se guardará
+                  </p>
+                </div>
+                <div className="mt-4 flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                    onClick={ () => setIsNewGameDialogOpen(false) }
+                  >
+                    No
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-violet-500 px-4 py-2 text-sm font-medium text-white"
+                    onClick={handleNewGame}
+                  >
+                    Si
+                  </button>
+                </div>
+              </DialogPanel>
+            </div>
+          </Dialog>
         </div>
       </div>
 
