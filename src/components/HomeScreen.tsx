@@ -83,7 +83,7 @@ export function HomeScreen({
         {/* History header with tabs */}
         <div className="w-full bg-dark-200">
           <div className="max-w-md mx-auto px-4">
-            <div className="bg-dark-100 rounded-xl shadow-lg p-4">
+            <div className="bg-dark-100 rounded-t-xl shadow-lg p-4">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-white flex items-center">
                   <span className="mr-2"><History24Filled></History24Filled></span> Partidas
@@ -118,7 +118,7 @@ export function HomeScreen({
       {/* Scrollable content area */}
       <div className="mt-67">
         <div className="max-w-md mx-auto px-4">
-          <div className="bg-dark-100 rounded-xl shadow-lg p-2">
+          <div className="bg-dark-100 rounded-b-xl shadow-lg p-2">
             <GameHistoryList
               history={activeTab === 'recent' ? recentGames : allGames}
               onLoadGame={onLoadGame}

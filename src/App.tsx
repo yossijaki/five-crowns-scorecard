@@ -528,7 +528,7 @@ function App() {
             onClick={() => setIsNewGameDialogOpen(true)}
             className="px-4 py-2 bg-dark-100 text-white rounded-lg 
                       hover:bg-dark-200 transition-colors flex items-center"
-            aria-label="Volver al inicio"
+            aria-label="Iniciar nuevo juego"
           >
             <span className="mr-1"><ArrowRepeatAll24Filled></ArrowRepeatAll24Filled></span>Nuevo
           </button>
