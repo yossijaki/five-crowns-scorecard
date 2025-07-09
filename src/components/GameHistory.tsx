@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { GameHistory } from '../types';
 import { formatDate } from '../utils';
 import { CheckmarkCircle16Filled, TextEditStyle24Filled, ArrowCounterclockwise24Filled, Delete24Filled } from '@fluentui/react-icons';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 
 interface GameHistoryProps {
   history: GameHistory[];
@@ -18,6 +19,7 @@ export function GameHistoryList({
 }: GameHistoryProps) {
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
   const [noteText, setNoteText] = useState('');
+  const [isDeleteGameDialogOpen, setIsDeleteGameDialogOpen] = useState(false);
 
   const handleEditNote = (game: GameHistory) => {
     setEditingNoteId(game.id);
@@ -34,9 +36,7 @@ export function GameHistoryList({
   };
 
   const handleDeleteGame = (gameId: string) => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar esta partida?')) {
-      onDeleteGame(gameId);
-    }
+    onDeleteGame(gameId);
   };
 
   if (history.length === 0) {
@@ -78,12 +78,43 @@ export function GameHistoryList({
                 <ArrowCounterclockwise24Filled></ArrowCounterclockwise24Filled>
               </button>
               <button
-                onClick={() => handleDeleteGame(game.id)}
+                onClick={() =>setIsDeleteGameDialogOpen(true)}
                 className="p-2 text-gray-400 hover:text-white rounded-full"
                 title="Eliminar partida"
               >
                 <Delete24Filled></Delete24Filled>
               </button>
+
+              <Dialog
+                open={isDeleteGameDialogOpen}
+                onClose={() => setIsDeleteGameDialogOpen(false)}
+                className="relative z-50"
+              >
+                <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+                <div className="fixed inset-0 flex items-center justify-center p-4">
+                  <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-dark-100 p-6 text-left align-middle shadow-xl transition-all">
+                    <DialogTitle className="font-bold">
+                      ¿Estás seguro de que quieres eliminar esta partida?
+                    </DialogTitle>
+                    <div className="mt-4 flex justify-end space-x-3">
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                        onClick={() => setIsDeleteGameDialogOpen(false)}
+                      >
+                        No
+                      </button>
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-violet-500 px-4 py-2 text-sm font-medium text-white"
+                        onClick={() => handleDeleteGame(game.id)}
+                      >
+                        Si
+                      </button>
+                    </div>
+                  </DialogPanel>
+                </div>
+              </Dialog>
             </div>
           </div>
 
