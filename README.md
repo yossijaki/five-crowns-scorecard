@@ -78,3 +78,10 @@ cd android
     npx capacitor-assets generate
     ```
 - If everything goes good, you should see the assets generated in the `./android/app/src/main/res/` folder.
+
+
+### Future features
+- [ ] Add a @capacitor/toast feedback when long pressing an element
+- [ ] Add Google AdSense
+- [ ] Add multiple languages
+- [ ] Add dark and light mode
