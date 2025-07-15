@@ -116,7 +116,7 @@ export function GameResults({
             )}
 
             <h3 className="text-lg font-semibold mb-3 text-white flex items-center">
-              <span className="mr-2"><Trophy24Filled className="text-yellow-500"></Trophy24Filled></span> Clasificación
+              <span className="mr-2"><Crown20Filled className="text-yellow-500"></Crown20Filled></span> Clasificación
             </h3>
             
             {sortedPlayers.map((player, index) => (
@@ -135,7 +135,7 @@ export function GameResults({
                 }}
               >
                 <span className="font-semibold text-white">
-                  {index === 0 && <span className="mr-1"><Crown20Filled className="text-yellow-500"></Crown20Filled></span>}
+                  {index === 0 && <span className="mr-1"></span>}
                   {index + 1}. {player.name}
                 </span>
                 <span className="float-right text-gray-300">

@@ -81,6 +81,7 @@ cd android
 
 
 ### Future features
+- [ ] Add possible hands info to the Scoreboard modal
 - [ ] Add a @capacitor/toast feedback when long pressing an element
 - [ ] Add Google AdSense
 - [ ] Add multiple languages
