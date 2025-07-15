@@ -1,0 +1,10 @@
+{
+  "homeScreen": {
+    "appTitle": "Пять Корон",
+    "newGame": "Новая Игра",
+    "newGameShort": "Новая",
+    "games": "Игры",
+    "recent": "Недавние",
+    "all": "Все"
+  }
+}

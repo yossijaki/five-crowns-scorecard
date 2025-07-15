@@ -1,0 +1,10 @@
+{
+  "homeScreen": {
+    "appTitle": "Five Crowns",
+    "newGame": "New Game",
+    "newGameShort": "New",
+    "games": "Games",
+    "recent": "Recent",
+    "all": "All"
+  }
+}

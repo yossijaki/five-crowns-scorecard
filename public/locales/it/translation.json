@@ -1,0 +1,10 @@
+{
+  "homeScreen": {
+    "appTitle": "Cinque Corone",
+    "newGame": "Nuova Partita",
+    "newGameShort": "Nuova",
+    "games": "Partite",
+    "recent": "Recenti",
+    "all": "Tutte"
+  }
+}

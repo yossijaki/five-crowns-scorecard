@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { GameHistory } from '../types';
 import { GameHistoryList } from './GameHistory';
 import { AddCircle24Filled, History24Filled } from '@fluentui/react-icons';
@@ -18,6 +19,7 @@ export function HomeScreen({
   onDeleteGame,
   onUpdateGameNote,
 }: HomeScreenProps) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'recent' | 'all'>('recent');
   const [isHeaderCompact, setIsHeaderCompact] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -64,17 +66,17 @@ export function HomeScreen({
                 className={`font-bold text-white transition-all duration-300 ease-in-out
                           ${isHeaderCompact ? 'text-lg mb-0' : 'text-2xl text-center mb-6'}`}
               >
-                Cinco Coronas
+                {t('homeScreen.appTitle')}
               </h1>
 
               <button
                 onClick={onStartNewGame}
-                className={`py-2 px-4 bg-primary text-white rounded-lg 
+                className={`py-2 px-4 bg-primary text-white rounded-lg
                          hover:bg-primary/90 transition-all duration-300 ease-in-out flex items-center justify-center
                          ${isHeaderCompact ? 'text-sm ml-2 shrink-0' : 'w-full py-3 text-lg font-semibold'}`}
               >
                 <AddCircle24Filled className='mx-2'></AddCircle24Filled>
-                {isHeaderCompact ? 'Nueva' : 'Nueva Partida'}
+                {isHeaderCompact ? t('homeScreen.newGameShort') : t('homeScreen.newGame')}
               </button>
             </div>
           </div>
@@ -86,7 +88,7 @@ export function HomeScreen({
             <div className="bg-dark-100 rounded-t-xl shadow-lg p-4">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-white flex items-center">
-                  <span className="mr-2"><History24Filled></History24Filled></span> Partidas
+                  <span className="mr-2"><History24Filled></History24Filled></span> {t('homeScreen.games')}
                 </h2>
 
                 <div className="flex bg-dark-300 rounded-lg p-1">
@@ -97,7 +99,7 @@ export function HomeScreen({
                         : 'text-gray-400 hover:text-white'
                       }`}
                   >
-                    Recientes
+                    {t('homeScreen.recent')}
                   </button>
                   <button
                     onClick={() => setActiveTab('all')}
@@ -106,7 +108,7 @@ export function HomeScreen({
                         : 'text-gray-400 hover:text-white'
                       }`}
                   >
-                    Todas
+                    {t('homeScreen.all')}
                   </button>
                 </div>
               </div>

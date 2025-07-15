@@ -1,0 +1,10 @@
+{
+  "homeScreen": {
+    "appTitle": "ファイブクラウン",
+    "newGame": "新しいゲーム",
+    "newGameShort": "新規",
+    "games": "ゲーム",
+    "recent": "最近",
+    "all": "すべて"
+  }
+}
